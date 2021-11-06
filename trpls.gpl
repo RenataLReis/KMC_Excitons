@@ -1,0 +1,37 @@
+#!/usr/bin/gnuplot
+set terminal pdfcairo enhanced
+set encoding iso_8859_1
+set output "trpls.pdf"
+set multiplot
+set size 0.90,0.90
+set origin 0.0,0.0
+set tics font "Times,20"
+set ytics 0,0.4,1.2
+set xtics 0,5,20
+set xrange [0:20]
+set yrange [0:1.2]
+set bmargin 5
+set lmargin 10
+set xlabel "Time (ns)" font "Times,20" #offset 0.0, 0.2
+set ylabel "Emissions and Annihilations" font "Times,20" #offset -0.5, 0
+
+
+min = 0.0 #among all number of excitons, gnuplot stats *10**9
+max = 22.4687 #idem
+N = 10000
+width = (max - min)/N
+
+
+hist(x,width) = width/2.0 + width*floor(x/width) #floor(arg): largest int < arg
+
+t2emi = 2.0*(10**(-9))
+f(x) = A*exp(-x/t2emi)+B*exp(-x/tc)
+A = 0.1
+B = 0.1
+tc = 1
+fit f(x) "T_death_5" u ($1*(10**(9))):($2*(10**9)) via A,B,tc
+
+
+plot "T_death_5" u (hist($1*(10**9),width)):(1.0) with boxes lc rgb "purple" notitle, f(x) lw 1.5 lc rgb "blue" notitle
+
+

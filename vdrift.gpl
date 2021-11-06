@@ -1,0 +1,27 @@
+#!/usr/bin/gnuplot
+set terminal pdfcairo enhanced
+set encoding iso_8859_1
+#set output "random_walk_dt_1_.pdf"
+set output "vdrift_q.pdf"
+set multiplot
+set size 0.90,0.90
+set origin 0.0,0.0
+set tics font "Times,20"
+set ytics -1,0.5,1
+set xtics 0,0.2,1
+set xrange [-0.02:1.02]
+set yrange [-1.1:1.1]
+set bmargin 5
+set lmargin 10
+set xlabel "Probability of moving up" font "Times,20" offset 0.0, -0.5
+set ylabel "Drift velocity (m/s)" font "Times,20" offset -0.5, 0
+set key center top 
+
+
+f(x)=a+b*x
+
+fit f(x) 'drift_q.txt' via a,b
+
+plot f(x) w l lw 2. lc rgb 'royalblue' title 'v(q)=2.00186q-1.00111', 'drift_q.txt' w points pt 7 ps 0.5 lc rgb 'dark-blue' notitle
+
+unset multiplot

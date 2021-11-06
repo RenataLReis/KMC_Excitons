@@ -1,0 +1,28 @@
+#!/usr/bin/gnuplot
+set terminal pdfcairo enhanced
+set encoding iso_8859_1
+set output "2D_vs_dy.pdf"
+set multiplot
+set size 0.9,0.9
+set origin 0.0,0.0
+set tics font "Times,20"
+set ytics 0,20,80
+set xtics 1,1,9
+set xrange [0.9:9.1]
+set yrange [-0.6:80]
+set key at 3.2,70.
+set bmargin 5
+set lmargin 10
+
+f1(x)=a1*x**2
+f2(x)=a2*x**2
+f3(x)=a3*x**2
+
+fit f1(x) '2D_vs_dy_dt_1' via a1
+fit f2(x) '2D_vs_dy_dt_2' via a2
+fit f3(x) '2D_vs_dy_dt_3' via a3 
+
+set xlabel "dy (a.t.u.)" font "Times,20" offset 0.0, -0.5
+set ylabel "2D (a.l.u.^2/a.t.u)" font "Times,20" offset -0.5, 0
+plot '2D_vs_dy_dt_1' w points ps 0.5 pt 7 lc rgb "yellow" title "dt=1", f1(x) w l lw 1.5 lc rgb "dark-yellow" notitle, '2D_vs_dy_dt_2' w points ps 0.5 pt 7 lc rgb "red" title "dt=2", f2(x) w l lw 1.5 lc rgb "dark-red" notitle, '2D_vs_dy_dt_3' w points ps 0.5 pt 7 lc rgb "blue" title "dt=3", f3(x) w l lw 1.5 lc rgb "dark-blue" notitle
+unset multiplot

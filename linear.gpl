@@ -1,0 +1,52 @@
+#!/usr/bin/gnuplot
+set terminal pdfcairo enhanced
+set encoding iso_8859_1
+set output "variance.pdf"
+set multiplot
+set size 0.90,0.90
+set origin 0.0,0.0
+set tics font "Times,20"
+set ytics 0,1,4
+set xtics 0,100,500
+set xrange [0:500]
+set yrange [0:4]
+set bmargin 5
+set lmargin 10
+##########################################################
+
+#f1(x)=a1+b1*x
+#f2(x)=a2+b2*x
+#f3(x)=a3+b3*x
+#f4(x)=a4+b4*x
+#f5(x)=a5+b5*x
+#f6(x)=a6+b6*x
+#f7(x)=a7+b7*x
+#f8(x)=a8+b8*x
+#f9(x)=a9+b9*x
+
+#a1,a2,a3,a4,a5,a6,a7,a8,a9=1
+#b1,b2,b3,b4,b5,b6,b7,b8,b9=1
+#fit f1(x) 'var_t_dt_1_dy_1' u ($1):($2/10000) via a1,b1
+#fit f2(x) 'var_t_dt_1_dy_2' u ($1):($2/10000) via a2,b2
+#fit f3(x) 'var_t_dt_1_dy_3' u ($1):($2/10000) via a3,b3
+#fit f4(x) 'var_t_dt_1_dy_4' u ($1):($2/10000) via a4,b4
+#fit f5(x) 'var_t_dt_1_dy_5' u ($1):($2/10000) via a5,b5
+#fit f6(x) 'var_t_dt_1_dy_6' u ($1):($2/10000) via a6,b6
+#fit f7(x) 'var_t_dt_1_dy_7' u ($1):($2/10000) via a7,b7
+#fit f8(x) 'var_t_dt_1_dy_8' u ($1):($2/10000) via a8,b8
+#fit f9(x) 'var_t_dt_1_dy_9' u ($1):($2/10000) via a9,b9
+
+
+set xlabel "Time (ns)" font "Times,20" offset 0.0, -0.5
+set ylabel "{/Symbol s} ()" font "Times,20" offset -0.5, 0.0
+#plot f1(x) w l lw 1. lc rgb "dark-red" notitle, 'var_t_dt_1_dy_1' u ($1):($2/10000) w l lw 0.5 lc rgb "red" notitle, f2(x) w l lw 1. lc rgb "orange-red" notitle, 'var_t_dt_1_dy_2'  u ($1):($2/10000) w l lw 0.5 lc rgb "salmon" notitle, f3(x) w l lw 1. lc rgb "dark-yellow" notitle, 'var_t_dt_1_dy_3'  u ($1):($2/10000) w l lw 0.5 lc rgb "yellow" notitle, f4(x) w l lw 1. lc rgb "green" notitle, 'var_t_dt_1_dy_4'  u ($1):($2/10000) w l lw 0.5 lc rgb "forest-green" notitle, f5(x) w l lw 1. lc rgb "dark-turquoise" notitle, 'var_t_dt_1_dy_5'  u ($1):($2/10000) w l lw 0.5 lc rgb "dark-cyan" notitle, f6(x) w l lw 1. lc rgb "medium-blue" notitle, 'var_t_dt_1_dy_6'  u ($1):($2/10000) w l lw 0.5 lc rgb "royalblue" notitle, f7(x) w l lw 1. lc rgb "dark-violet" notitle, 'var_t_dt_1_dy_7'  u ($1):($2/10000) w l lw 0.5 lc rgb "violet" notitle, f8(x) w l lw 1. lc rgb "magenta" notitle, 'var_t_dt_1_dy_8'  u ($1):($2/10000) w l lw 0.5 lc rgb "light-magenta" notitle, f9(x) w l lw 1. lc rgb "brown" notitle, 'var_t_dt_1_dy_9'  u ($1):($2/10000) w l lw 0.5 lc rgb "coral" notitle
+
+
+f(x)=a+b*x
+
+fit f(x) 'var_t' via a,b
+
+plot f(x) w l lw 1.5 lc rgb "black" notitle, 'var_t' w points ls 6 notitle
+
+#plot f(x) w l lw 1.5 lc rgb "black" notitle, 'var_t' w points ls 6 notitle 
+unset multiplot
